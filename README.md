@@ -248,11 +248,10 @@ The analysis used five selected autosomes and the X chromosome scaffold from the
 | R Script Interpretation | XX-like |
 
 ### Chromosome Relative Depth Graph
-
-<img width="1251" height="702" alt="image" src="https://github.com/user-attachments/assets/6cc6242f-1b43-439b-b512-537cc49c550d" />
+<img width="1000" height="580" alt="chromosome_depth" src="https://github.com/user-attachments/assets/4b8a62f4-cd7a-4972-a864-f4b52889407f" />
 
 ***Figure 1. Autosomal and sex-chromosome relative sequencing depth of *Drosophila yakuba*.***  
-Relative chromosome depth was calculated by dividing the mean sequencing depth of each chromosome by the median sequencing depth of five selected autosomes (`20.132×`). Most autosomes show relative depths near `1.0` (with `NC_052526.2` showing ~`0.527`), while the X chromosome (`NC_052531.2`) has a relative depth of `1.031`. The X:A ratio suggests an **XX-like** dosage pattern based on the classroom thresholds (`≥ 0.80`), although this conflicts with the recorded male sex of the WGS sample.
+Relative chromosome depth was calculated by dividing each sequence's mean depth (`meandepth`) by the median depth of the five selected autosomes (`20.132×`). The bar chart shows `NC_052527.2` through `NC_052530.2` clustered near the `1.0` diploid reference line (`0.955`–`1.023`), while `NC_052526.2` falls near the `0.5` line (`0.527`) and `NC_052531.2` sits just above `1.0` (`1.031`). Under the current grouping (`NC_052531.2` as `X`), the resulting X:A ratio of `1.031` produces an **XX-like** script call (`≥ 0.80`), which conflicts with the male WGS BioSample (`SAMN37625352`) and highlights why scaffold identity verification is essential.
 
 ## 8. Answers to the Report Questions
 
@@ -276,17 +275,11 @@ Their identities were verified using the NCBI assembly report (`GCF_016746365.2_
 
 ### 4. What are the median autosomal depth, X:A ratio, and inferred sex-chromosome complement?
 
-The median autosomal depth was `20.132×`. The calculated X:A ratio was `1.031`, and no Y chromosome scaffold was evaluated (`Y:A = NA`).
-
-Based on the classroom R script thresholds (`ratio >= 0.80`), the X:A ratio falls within the **XX-like** interpretation category. However, this is a preliminary classroom inference and requires cross-checking against assembly scaffold assignments.
+The median autosomal depth was `20.132×`. With `NC_052531.2` assigned as `X` and no `Y` scaffold evaluated (`Y:A = NA`), the X:A ratio is `1.031`, which the classroom script classifies as **XX-like** (`ratio >= 0.80`). As shown in Figure 1, however, `NC_052526.2` has a relative depth of `0.527` while `NC_052531.2` has a relative depth of `1.031`, making scaffold-to-chromosome verification critical before drawing a final biological conclusion.
 
 ### 5. Does your result agree with the recorded sex of the WGS donor? Explain any discrepancy or uncertainty.
 
-The WGS BioSample metadata (`SAMN37625352`) records the donor as an **adult male**. In a typical *Drosophila* XX/XY system, a male is expected to have a single X chromosome, yielding an X:A ratio near `0.50`.
-
-However, the calculated X:A ratio of `1.031` was classified as **XX-like** by the script, conflicting with the recorded male metadata. Notably, scaffold `NC_052526.2` displayed a mean depth of `10.6146×` (relative depth `0.527`), whereas `NC_052531.2` displayed `20.7518×` (relative depth `1.031`). This discrepancy strongly suggests either a scaffold-to-chromosome misassignment in the grouping table (where `NC_052526.2` actually represents the hemizygous X chromosome in a true XY male, and `NC_052531.2` represents the small dot chromosome 4), or a sample sex mislabeling/pooled sample in the SRA submission.
-
-Therefore, without verifying the exact RefSeq scaffold-to-chromosome mapping in the assembly report, the automated script call should be treated with caution.
+The WGS BioSample (`SAMN37625352`) is recorded as **male**, where a single X chromosome in an XX/XY system would typically be expected around `~0.50×` relative depth. Instead, the plot shows `NC_052531.2` at `1.031` (giving an **XX-like** call) and `NC_052526.2` at `0.527`. This discrepancy points to potential scaffold-to-chromosome mislabeling in the grouping table (if `NC_052526.2` represents the hemizygous X chromosome and `NC_052531.2` represents a smaller/diploid chromosome such as chromosome 4), possible sample/metadata differences, or coverage variation across assembly regions.
 
 ### 6. Why is a chromosome-level assembly alone insufficient for a reliable read-depth sex inference?
 
